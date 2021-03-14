@@ -85,6 +85,10 @@ namespace XBEVMDGEN.UI
         private static void GenerateVMDS(long xbestart)
         {
             int headerlength = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + 0x0108, xbestart + 0x0108+0x4, true), 0);
+            if(headerlength > 4*4096)
+            {
+                return;
+            }
             int xbesize = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + 0x010C, xbestart + 0x010C+0x4, true), 0);
             int numberofsections = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + 0x011C, xbestart + 0x011C+0x4, true), 0);
             int sectionheadersaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + 0x0120, xbestart + 0x0120+ 0x4, true), 0) - 0x10000;
@@ -137,7 +141,10 @@ namespace XBEVMDGEN.UI
                 long[] range = new long[2];
                 range[0] = currentsectionaddress;
                 range[1] = currentsectionendaddr;
-
+                if (currentsectionaddress >= currentsectionendaddr)
+                {
+                    return;
+                }
                 List<long[]> ranges = new List<long[]>();
                 ranges.Add(range);
                 VmdPrototype vmdPrototype = new VmdPrototype();
