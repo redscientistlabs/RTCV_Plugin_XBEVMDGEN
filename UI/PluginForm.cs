@@ -99,14 +99,24 @@ namespace XBEVMDGEN.UI
             int currentsectionendaddr = 0x0;
             string currentsectionname = "";
             int certificateaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + 0x0118, xbestart + 0x0118+0x4, true), 0) - 0x10000;
-            gamename = System.Text.Encoding.ASCII.GetString(xboxsdram.PeekBytes(xbestart + certificateaddress + 0xC, xbestart + certificateaddress + 0xC+16, true)).Replace("\0", ""); //only retrieve the first 8 characters of the game name so the vmd name isn't too long
+            gamename = System.Text.Encoding.ASCII.GetString(xboxsdram.PeekBytes(xbestart + certificateaddress + 0xC, xbestart + certificateaddress + 0xC+0x50, true)).Replace("\0", "");
+            gamename = gamename.Trim().Replace(" ", "").Replace("-", "").Replace(":","").Substring(0, 9); //trim down the game name to just 9 characters and remove seperators
             int addresstoread = sectionheadersaddress;
+            string firstsectionname = "";
+            int firstsectionnameaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + sectionheadersaddress + 0x14, xbestart + sectionheadersaddress + 0x14 + 0x4, true), 0) - 0x10000;
+            firstsectionname = System.Text.Encoding.ASCII.GetString(xboxsdram.PeekBytes(xbestart + firstsectionnameaddress, xbestart + firstsectionnameaddress + 10, true));
             int i = 0;
             while (i < numberofsections)
             {
                 currentsection = i;
                 currentsectionnameaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + addresstoread + 0x14, xbestart + addresstoread + 0x14+0x4, true), 0) - 0x10000;
                 currentsectionname = System.Text.Encoding.ASCII.GetString(xboxsdram.PeekBytes(xbestart + currentsectionnameaddress, xbestart + currentsectionnameaddress +10, true));
+
+                if (!firstsectionname.StartsWith(".text"))
+                {
+                    currentsectionnameaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + addresstoread + 0x14, xbestart + addresstoread + 0x14 + 0x4, true), 0);
+                    currentsectionname = System.Text.Encoding.ASCII.GetString(xboxsdram.PeekBytes(currentsectionnameaddress, currentsectionnameaddress + 10, true));
+                }
                 //clean up section names, at least for conker
                 if (currentsectionname.StartsWith(".text")) currentsectionname = ".text";
                 if (currentsectionname.StartsWith("D3DX")) currentsectionname = "D3DX";
