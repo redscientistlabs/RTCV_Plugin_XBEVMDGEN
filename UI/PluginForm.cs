@@ -22,20 +22,20 @@ namespace XBEVMDGEN.UI
         public MemoryInterface[] miarray;
         int magicnumber = 0x48454258;
         //public MemoryInterface xboxsdram;
-        public static MemoryDomainProxy xboxsdram = MemoryDomains.GetProxy("System Memory", 0);
-        public static MemoryInterface mi = MemoryDomains.MemoryInterfaces["System Memory"];
+        public static MemoryDomainProxy xboxsdram = MemoryDomains.GetProxy("Virtual Memory", 0);
+        public static MemoryInterface mi = MemoryDomains.MemoryInterfaces["Virtual Memory"];
         static string vmdnameText = "";
         static string gamename = "";
         static long xbestartaddress = 0x10000;
         public PluginForm()
         {
             InitializeComponent();
-            xboxsdram = MemoryDomains.GetProxy("System Memory", 0);
-            mi = MemoryDomains.MemoryInterfaces["System Memory"];
-            //xboxsdram = MemoryDomains.MemoryInterfaces["System Memory"];
-            //if(MemoryDomains.GetProxy("System Memory", 0).MD == null)
+            xboxsdram = MemoryDomains.GetProxy("Virtual Memory", 0);
+            mi = MemoryDomains.MemoryInterfaces["Virtual Memory"];
+            //xboxsdram = MemoryDomains.MemoryInterfaces["Virtual Memory"];
+            //if(MemoryDomains.GetProxy("Virtual Memory", 0).MD == null)
             //{
-            //    MemoryDomains.GetProxy("System Memory",0).MD = MemoryDomains.
+            //    MemoryDomains.GetProxy("Virtual Memory",0).MD = MemoryDomains.
             //}
             //PluginConnectorEMU.RefreshDomains();
 
@@ -46,7 +46,7 @@ namespace XBEVMDGEN.UI
 
             RefreshDomains();
             bool xbeisatexpectedaddress = false;
-            //string mbox = $"Memory Interface is {xboxsdram.ToString()}. \nIts name is {xboxsdram.Name}.\nMD is{MemoryDomains.GetProxy("System Memory", 0).ToString()}";
+            //string mbox = $"Memory Interface is {xboxsdram.ToString()}. \nIts name is {xboxsdram.Name}.\nMD is{MemoryDomains.GetProxy("Virtual Memory", 0).ToString()}";
             //MessageBox.Show(mbox);
             //MessageBox.Show($"Value at {xbestartaddress} is {BitConverter.ToString(xboxsdram.PeekBytes(xbestartaddress, 4))}\n");
             //if (xboxsdram.PeekBytes(xbestartaddress, 4) == magicnumber)
@@ -79,8 +79,8 @@ namespace XBEVMDGEN.UI
         }
         public static void RefreshDomains()
         {
-            xboxsdram = MemoryDomains.GetProxy("System Memory", 0);
-            mi = MemoryDomains.MemoryInterfaces["System Memory"];
+            xboxsdram = MemoryDomains.GetProxy("Virtual Memory", 0);
+            mi = MemoryDomains.MemoryInterfaces["Virtual Memory"];
         }
         private static void GenerateVMDS(long xbestart)
         {
@@ -158,7 +158,7 @@ namespace XBEVMDGEN.UI
                 List<long[]> ranges = new List<long[]>();
                 ranges.Add(range);
                 VmdPrototype vmdPrototype = new VmdPrototype();
-                vmdPrototype.GenDomain = "System Memory";
+                vmdPrototype.GenDomain = "Virtual Memory";
                 vmdPrototype.BigEndian = mi.BigEndian;
                 vmdPrototype.AddRanges = ranges;
                 vmdPrototype.WordSize = mi.WordSize;
@@ -168,7 +168,7 @@ namespace XBEVMDGEN.UI
                 /*RTCV.CorruptCore.MemoryDomains.AddVMD(new VmdPrototype()
                 {
                     AddRanges = ranges,
-                    GenDomain = "System Memory",
+                    GenDomain = "Virtual Memory",
                     VmdName = vmdnameText,
                     BigEndian = mi.BigEndian,
                     WordSize = mi.WordSize,
