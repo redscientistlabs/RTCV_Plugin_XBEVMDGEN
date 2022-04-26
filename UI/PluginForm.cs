@@ -117,7 +117,7 @@ namespace XBEVMDGEN.UI
                     currentsectionnameaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + addresstoread + 0x14, xbestart + addresstoread + 0x14 + 0x4, true), 0);
                     currentsectionname = System.Text.Encoding.ASCII.GetString(xboxsdram.PeekBytes(currentsectionnameaddress, currentsectionnameaddress + 10, true));
                 }
-                currentsectionname = currentsectionname.Trim().Replace("\t", " ").Replace("\0", "").Replace(" ", "").Replace("-", "").Replace(":", "");
+                currentsectionname = currentsectionname.Trim().Substring(0, currentsectionname.IndexOf("\0"));
                 currentsectionaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + addresstoread + 0x4, xbestart + addresstoread + 0x4+0x4, true), 0);
                 currentsectionsize = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + addresstoread + 0x8, xbestart + addresstoread + 0x8+0x4, true), 0);
                 currentsectionendaddr = currentsectionaddress + currentsectionsize;
