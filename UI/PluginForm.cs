@@ -117,33 +117,7 @@ namespace XBEVMDGEN.UI
                     currentsectionnameaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + addresstoread + 0x14, xbestart + addresstoread + 0x14 + 0x4, true), 0);
                     currentsectionname = System.Text.Encoding.ASCII.GetString(xboxsdram.PeekBytes(currentsectionnameaddress, currentsectionnameaddress + 10, true));
                 }
-                //clean up section names, at least for conker
-                if (currentsectionname.StartsWith(".text")) currentsectionname = ".text";
-                if (currentsectionname.StartsWith("D3DX")) currentsectionname = "D3DX";
-                if (currentsectionname.StartsWith("XNET")) currentsectionname = "XNET";
-                if (currentsectionname.StartsWith("XONLINE")) currentsectionname = "XONLINE";
-                if (currentsectionname.StartsWith("DSOUND")) currentsectionname = "DSOUND";
-                if (currentsectionname.StartsWith("XMV")) currentsectionname = "XMV";
-                if (currentsectionname.StartsWith("WMADEC")) currentsectionname = "WMADEC";
-                if (currentsectionname.StartsWith("XGRPH")) currentsectionname = "XGRPH";
-                if (currentsectionname.StartsWith("D3D ")) currentsectionname = "D3D";
-                if (currentsectionname.StartsWith("PAGELK")) currentsectionname = "PAGELK";
-                if (currentsectionname.StartsWith("XACTENG")) currentsectionname = "XACTENG";
-                if (currentsectionname.StartsWith("EFFECT_U")) currentsectionname = "EFFECT_U";
-                if (currentsectionname.StartsWith("EFFECT_C")) currentsectionname = "EFFECT_C";
-                if (currentsectionname.StartsWith("EFFECTS_")) currentsectionname = "EFFECTS_";
-                if (currentsectionname.StartsWith("XPP")) currentsectionname = "XPP";
-                if (currentsectionname.StartsWith(".rdata")) currentsectionname = ".rdata";
-                if (currentsectionname.StartsWith(".data ")) currentsectionname = ".data";
-                if (currentsectionname.StartsWith("XON_RD")) currentsectionname = "XON_RD";
-                if (currentsectionname.StartsWith(".data1")) currentsectionname = ".data1";
-                if (currentsectionname.StartsWith("DOLBY")) currentsectionname = "DOLBY";
-                if (currentsectionname.StartsWith("$$XTIMAGE")) currentsectionname = "$$XTIMAGE";
-                if (currentsectionname.StartsWith("$$XSIMAGE")) currentsectionname = "$$XSIMAGE";
-                if (currentsectionname.StartsWith("dirtydisk")) currentsectionname = "dirtydisk";
-                if (currentsectionname.StartsWith("font8_bit")) currentsectionname = "font8_bit";
-                if (currentsectionname.StartsWith("font12_bi")) currentsectionname = "font12_bi";
-                if (currentsectionname.StartsWith(".XTLID")) currentsectionname = ".XTLID";
+                currentsectionname = currentsectionname.Trim().Replace("\t", " ").Replace("\0", "").Replace(" ", "").Replace("-", "").Replace(":", "");
                 currentsectionaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + addresstoread + 0x4, xbestart + addresstoread + 0x4+0x4, true), 0);
                 currentsectionsize = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + addresstoread + 0x8, xbestart + addresstoread + 0x8+0x4, true), 0);
                 currentsectionendaddr = currentsectionaddress + currentsectionsize;
