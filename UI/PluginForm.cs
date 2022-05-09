@@ -20,24 +20,32 @@ namespace XBEVMDGEN.UI
     public partial class PluginForm : Form
     {
         public MemoryInterface[] miarray;
-        int magicnumber = 0x48454258;
+        //int magicnumber = 0x48454258;
         //public MemoryInterface xboxsdram;
-        public static MemoryDomainProxy xboxsdram = MemoryDomains.GetProxy("Virtual Memory", 0);
-        public static MemoryInterface mi = MemoryDomains.MemoryInterfaces["Virtual Memory"];
+        public static MemoryDomainProxy xboxsdram = null;
+        public static MemoryInterface mi = null;
         static string vmdnameText = "";
         static string gamename = "";
-        static long xbestartaddress = 0x10000;
+        //static long xbestartaddress = 0x10000;
         public PluginForm()
         {
             InitializeComponent();
-            xboxsdram = MemoryDomains.GetProxy("Virtual Memory", 0);
-            mi = MemoryDomains.MemoryInterfaces["Virtual Memory"];
-            //xboxsdram = MemoryDomains.MemoryInterfaces["Virtual Memory"];
-            //if(MemoryDomains.GetProxy("Virtual Memory", 0).MD == null)
-            //{
-            //    MemoryDomains.GetProxy("Virtual Memory",0).MD = MemoryDomains.
-            //}
-            //PluginConnectorEMU.RefreshDomains();
+
+            try
+            {
+                xboxsdram = MemoryDomains.GetProxy("Virtual Memory", 0);
+                mi = MemoryDomains.MemoryInterfaces["Virtual Memory"];
+                //xboxsdram = MemoryDomains.MemoryInterfaces["Virtual Memory"];
+                //if(MemoryDomains.GetProxy("Virtual Memory", 0).MD == null)
+                //{
+                //    MemoryDomains.GetProxy("Virtual Memory",0).MD = MemoryDomains.
+                //}
+                //PluginConnectorEMU.RefreshDomains();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Could not load XBEVMDGEN plugin.\nThis is meant to be used exclusively with xemu-Vanguard\n\n" + ex.ToString());
+            }
 
         }
 
@@ -45,7 +53,7 @@ namespace XBEVMDGEN.UI
         {
 
             RefreshDomains();
-            bool xbeisatexpectedaddress = false;
+            //bool xbeisatexpectedaddress = false;
             //string mbox = $"Memory Interface is {xboxsdram.ToString()}. \nIts name is {xboxsdram.Name}.\nMD is{MemoryDomains.GetProxy("Virtual Memory", 0).ToString()}";
             //MessageBox.Show(mbox);
             //MessageBox.Show($"Value at {xbestartaddress} is {BitConverter.ToString(xboxsdram.PeekBytes(xbestartaddress, 4))}\n");
