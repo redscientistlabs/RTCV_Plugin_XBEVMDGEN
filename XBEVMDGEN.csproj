@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>packages\NLog.4.7.8\lib\net45\NLog.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -74,26 +75,32 @@
     <ProjectReference Include="..\RTCV\Source\Frontend\UI\UI.csproj">
       <Project>{db5852ca-0233-4a4c-9bb6-8cee10c13406}</Project>
       <Name>UI</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\RTCV\Source\Libraries\Common\Common.csproj">
       <Project>{dba43589-19de-430e-b07e-4bf911e609ca}</Project>
       <Name>Common</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\RTCV\Source\Libraries\CorruptCore\CorruptCore.csproj">
       <Project>{bf840aac-84ee-460d-8f98-981d844ba953}</Project>
       <Name>CorruptCore</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\RTCV\Source\Libraries\NetCore\NetCore.csproj">
       <Project>{3fdcff60-02a2-4cb2-99bf-74681352c06d}</Project>
       <Name>NetCore</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\RTCV\Source\Libraries\PluginHost\PluginHost.csproj">
       <Project>{65860c68-33c7-49b5-9ec0-3fd426a7db98}</Project>
       <Name>PluginHost</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\RTCV\Source\Libraries\Vanguard\Vanguard.csproj">
       <Project>{1bf96fb6-5615-4e9c-82c1-838e899689f7}</Project>
       <Name>Vanguard</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

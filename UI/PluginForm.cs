@@ -100,7 +100,7 @@ namespace XBEVMDGEN.UI
             string currentsectionname = "";
             int certificateaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + 0x0118, xbestart + 0x0118+0x4, true), 0) - 0x10000;
             gamename = System.Text.Encoding.ASCII.GetString(xboxsdram.PeekBytes(xbestart + certificateaddress + 0xC, xbestart + certificateaddress + 0xC+0x50, true)).Replace("\0", "");
-            gamename = gamename.Trim().Replace(" ", "").Replace("-", "").Replace(":","").Substring(0, 9); //trim down the game name to just 9 characters and remove seperators
+            gamename = gamename.Trim().Replace(" ", "").Replace("-", "").Replace(":",""); //trim down the game name and remove seperators
             int addresstoread = sectionheadersaddress;
             string firstsectionname = "";
             int firstsectionnameaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + sectionheadersaddress + 0x14, xbestart + sectionheadersaddress + 0x14 + 0x4, true), 0) - 0x10000;
@@ -117,7 +117,7 @@ namespace XBEVMDGEN.UI
                     currentsectionnameaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + addresstoread + 0x14, xbestart + addresstoread + 0x14 + 0x4, true), 0);
                     currentsectionname = System.Text.Encoding.ASCII.GetString(xboxsdram.PeekBytes(currentsectionnameaddress, currentsectionnameaddress + 10, true));
                 }
-                currentsectionname = currentsectionname.Trim().Substring(0, currentsectionname.IndexOf("\0"));
+                currentsectionname = currentsectionname.Trim().Substring(0, currentsectionname.Contains('\0') ? currentsectionname.IndexOf("\0") : currentsectionname.Length);
                 currentsectionaddress = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + addresstoread + 0x4, xbestart + addresstoread + 0x4+0x4, true), 0);
                 currentsectionsize = BitConverter.ToInt32(xboxsdram.PeekBytes(xbestart + addresstoread + 0x8, xbestart + addresstoread + 0x8+0x4, true), 0);
                 currentsectionendaddr = currentsectionaddress + currentsectionsize;
